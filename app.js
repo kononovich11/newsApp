@@ -1,8 +1,9 @@
 document.addEventListener('DOMContentLoaded', function() {
     M.AutoInit();
+    loadNews();
   });
 
-function http() {
+function customHttp() {
   return {
     get(url, cb) {
       try {
@@ -57,5 +58,29 @@ function http() {
   };
 } 
 
-const Http = http();
-console.log(myHttp);
+const http = customHttp();
+
+const newsServiece = (function() {
+  const apiKey = '1811e67657934de8ae4c6a1d6cf0f290';
+  const apiUrl = 'http://newsapi.org/v2';
+
+  return {
+    topHeadLines(country = 'us', cb) {
+      http.get(`${apiUrl}/top-headlines?country=${country}&apiKey=${apiKey}`, cb);
+    },
+    everything(query, cb) {
+      http.get(`${apiUrl}/everything?q=${query}&apiKey=${apiKey}`, cb);
+    },
+  }
+}());
+
+//Load news function
+function loadNews() {
+  newsServiece.topHeadLines('ru', onGetResponse);
+}
+
+//function on get response from server 
+function onGetResponse(err, responseArr) {
+  console.log(responseArr);
+}
+
