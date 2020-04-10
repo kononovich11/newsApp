@@ -102,15 +102,16 @@ function loadNews() {
 
 //function on get response from server 
 function onGetResponse(err, responseArr) {
-  removePreloader();
   console.log(responseArr);
+  removePreloader();
   if (err) {
     showAlert(err, 'err-msg');
     return;
   }
-
-  if(!responseArr.articles) {
-    //show empty message
+  
+//show empty message
+  if(responseArr.articles == 0) {
+    notFindRequest(`Sorry, we couldn't find any results` , 'btn');
     return;
   }
 
@@ -161,6 +162,10 @@ function newsTemplate({urlToImage, title, url, description}) {
 }
 
 function showAlert(msg, type = 'success') {
+  M.toast({html: msg, classes: type});
+}
+
+function notFindRequest(msg, type){
   M.toast({html: msg, classes: type});
 }
 
