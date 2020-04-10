@@ -65,8 +65,8 @@ const newsServiece = (function() {
   const apiUrl = 'http://newsapi.org/v2';
 
   return {
-    topHeadLines(country = 'us', cb) {
-      http.get(`${apiUrl}/top-headlines?country=${country}&apiKey=${apiKey}`, cb);
+    topHeadLines(country = 'us', category = 'general', cb) {
+      http.get(`${apiUrl}/top-headlines?country=${country}&category=${category}&apiKey=${apiKey}`, cb);
     },
     everything(query, cb) {
       http.get(`${apiUrl}/everything?q=${query}&apiKey=${apiKey}`, cb);
@@ -77,6 +77,7 @@ const newsServiece = (function() {
 //Elements 
 const form = document.querySelector('form');
 const countrySelect = form.elements['country'];
+const categorySelect = form.elements['category'];
 const searchInput = form.elements['autocomplete-input'];
 
 form.addEventListener('submit', (e) => {
@@ -87,12 +88,13 @@ form.addEventListener('submit', (e) => {
 //Load news function
 function loadNews() {
   const country = countrySelect.value;
+  const category = categorySelect.value;
   const searchText = searchInput.value;
 
   showPreloader();
 
   if(!searchText) {
-    newsServiece.topHeadLines(country, onGetResponse);
+    newsServiece.topHeadLines(country, category, onGetResponse);
   } else {
     newsServiece.everything(searchText, onGetResponse);
   }
@@ -101,6 +103,7 @@ function loadNews() {
 //function on get response from server 
 function onGetResponse(err, responseArr) {
   removePreloader();
+  console.log(responseArr);
   if (err) {
     showAlert(err, 'err-msg');
     return;
