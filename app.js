@@ -74,13 +74,33 @@ const newsServiece = (function() {
   }
 }());
 
+//Elements 
+const form = document.querySelector('form');
+const countrySelect = form.elements['country'];
+const searchInput = form.elements['autocomplete-input'];
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  loadNews();
+})
+
 //Load news function
 function loadNews() {
-  newsServiece.topHeadLines('us', onGetResponse);
+  const country = countrySelect.value;
+  const searchText = searchInput.value;
+
+  if(!searchText) {
+    newsServiece.topHeadLines(country, onGetResponse);
+  } else {
+    newsServiece.everything(searchText, onGetResponse);
+  }
 }
 
 //function on get response from server 
 function onGetResponse(err, responseArr) {
+  if (err) {
+    
+  }
   renderNews(responseArr.articles);
 }
 
