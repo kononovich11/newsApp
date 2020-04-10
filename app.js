@@ -62,7 +62,7 @@ const http = customHttp();
 
 const newsServiece = (function() {
   const apiKey = '1811e67657934de8ae4c6a1d6cf0f290';
-  const apiUrl = 'http://newsapi.org/v2';
+  const apiUrl = 'https://newsapi.org/v2';
 
   return {
     topHeadLines(country = 'us', category = 'general', cb) {
