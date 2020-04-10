@@ -102,14 +102,13 @@ function loadNews() {
 
 //function on get response from server 
 function onGetResponse(err, responseArr) {
-  console.log(responseArr);
   removePreloader();
   if (err) {
     showAlert(err, 'err-msg');
     return;
   }
-  
-//show empty message
+
+  //show empty message
   if(responseArr.articles == 0) {
     notFindRequest(`Sorry, we couldn't find any results` , 'btn');
     return;
@@ -126,6 +125,10 @@ function renderNews(news) {
   }
   let fragment = '';
   news.forEach(newsItem => {
+    //if article don't have picture
+    if(!newsItem.urlToImage) {
+      newsItem.urlToImage = 'https://i.ytimg.com/vi/qOKsRJbnD1A/maxresdefault.jpg';
+    }
     const el = newsTemplate(newsItem);
     fragment += el;
   });
