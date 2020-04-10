@@ -100,6 +100,7 @@ function loadNews() {
 
 //function on get response from server 
 function onGetResponse(err, responseArr) {
+  removePreloader();
   if (err) {
     showAlert(err, 'err-msg');
     return;
@@ -166,4 +167,11 @@ function showPreloader() {
       <div class="indeterminate"></div>
     </div>
   `); 
+}
+
+function removePreloader() {
+  const loader = document.querySelector('.progress');
+  if(loader) {
+    loader.remove();
+  }
 }
