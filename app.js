@@ -89,6 +89,8 @@ function loadNews() {
   const country = countrySelect.value;
   const searchText = searchInput.value;
 
+  showPreloader();
+
   if(!searchText) {
     newsServiece.topHeadLines(country, onGetResponse);
   } else {
@@ -156,4 +158,12 @@ function newsTemplate({urlToImage, title, url, description}) {
 
 function showAlert(msg, type = 'success') {
   M.toast({html: msg, classes: type});
+}
+
+function showPreloader() {
+  document.body.insertAdjacentHTML('afterbegin', `
+    <div class="progress">
+      <div class="indeterminate"></div>
+    </div>
+  `); 
 }
