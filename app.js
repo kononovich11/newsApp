@@ -183,6 +183,7 @@ function showPreloader() {
 function removePreloader() {
   const loader = document.querySelector('.progress');
   if(loader) {
-    loader.remove()
+    loader.remove();
+    console.log(loader);
   }
 }
